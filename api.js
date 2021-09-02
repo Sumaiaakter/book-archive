@@ -8,7 +8,7 @@ const searchBook = () => {
     searchField.value = "";
 
 
-    const bookUrl = `http://openlibrary.org/search.json?q=${searchText}`;
+    const bookUrl = `https://openlibrary.org/search.json?q=${searchText}`;
 
     // console.log(bookUrl);
     fetch(bookUrl)
