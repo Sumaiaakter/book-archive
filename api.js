@@ -7,15 +7,46 @@ const searchBook = () => {
 
     // load data
     const url = ` http://openlibrary.org/search.json?q=${searchText}`;
+
+    console.log(url);
     fetch(url)
         .then(res => res.json())
         .then(data => displayBook(data.docs[0]));
 }
 // searchBook();
 
-const displayBook = author => {
-    console.log(author);
+const displayBook = books => {
+
+    console.log(books);
+
+
+    // images collection
+
+    const load = () => {
+        const url = "https://ia902701.us.archive.org/view_archive.php?archive=/18/items/olcovers55/olcovers55-L.zip&file=554106-L.jpg";
+        console.log(url);
+        const movieContainer = document.getElementById("image-details")
+        const movieBox = document.createElement("div")
+        movieBox.classList.add("col-md-3")
+        movieBox.innerHTML = `
+            <div class="shadow rounded p-3 m-2">
+                <img width="200px" height="200px" class="img-fluid" src='${url}'>
+
+            </div>
+`
+
+        movieContainer.appendChild(movieBox)
+
+
+    }
+    load();
+
+
+
+
     const bookName = document.getElementById('author-name');
+    const movieContainer = document.getElementById("image-details");
+    const url = "https://ia902701.us.archive.org/${554106}-L.jpg";
 
     // clear div
 
@@ -23,27 +54,30 @@ const displayBook = author => {
 
     // error message
 
-    if (!author) {
+    if (!books) {
         document.getElementById("error-message").innerHTML =
             "<p class='text-center p-3 bg-danger'><b>Please enter a valid name...</b></p>";
     }
     else {
 
         const div = document.createElement('div');
-        div.classList.add('card');
+        div.classList.add('col-md-3');
 
         div.innerHTML = `
-        <div class="card-body">
-                <img class="img-fluid" src='${author.imgUrl}'>
-                <h5 class="card-title">${author.title}</h5>
-                <p class="card-text">${author.first_publish_year}</p>
-                <p class="card-text">${author.cover_i}</p>
-                <p class="card-text">${author.author_name}</p>
-                
-        </div>
+           
+            <div class="shadow rounded p-2 m-2">
+                 
+                <h5 class="card-title">Name: ${books.title}</h5>
+                <p class="card-text">First Publish: ${books.first_publish_year}</p>
+                <p class="card-text">Publisher: ${books.publisher}</p>
+                <p class="card-text">Author Name: ${books.author_name}</p>
+
+            </div>
+           
 
     `;
-        bookName.appendChild(div);
+        // bookName.appendChild(div);
+        movieContainer.appendChild(div);
 
     }
 
@@ -54,29 +88,11 @@ const displayBook = author => {
 }
 
 
-const displayImages = loadImage => {
-    console.log(loadImage);
-    const imgUrl = "https://covers.openlibrary.org/b/id/${554106}-L.jpg"
-    fetch(imgUrl)
-        .then(res => res.json())
-        .then(data => coverImage(data.cover_i))
-
-}
-const coverImage = (images) => {
-    console.log(images);
-    const image = document.getElementById('image');
-    const div = document.createElement('div');
-    div.classList.add('card');
-    div.innerHTML = `
-        <div class="card-body">
-                <h5 class="card-title">${images.publisher}</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-`;
-    image.appendChild(div);
 
 
-}
+
+
+
+
 
 
